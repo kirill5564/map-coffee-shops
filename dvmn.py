@@ -24,8 +24,10 @@ def fetch_coordinates(apikey, address):
     lon, lat = most_relevant['GeoObject']['Point']['pos'].split(" ")
     return lon, lat
 
+
 def get_distance_coffee(list_coffee_house):
     return list_coffee_house['distance']
+
 
 def main():
     my_file = open('coffee.json', 'r')
@@ -63,6 +65,7 @@ def main():
         icon=folium.Icon(icon="cloud"),
         ).add_to(m)
     m.save("index.html")
+
 
 if __name__ == '__main__':
     main()
