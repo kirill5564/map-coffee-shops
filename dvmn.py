@@ -1,7 +1,6 @@
 import json
 import requests
 from geopy import distance
-from pprint import pprint
 import folium
 import os
 from dotenv import load_dotenv
@@ -30,12 +29,11 @@ def get_distance_coffee(list_coffee_house):
 
 
 def main():
-    my_file = open('coffee.json', 'r')
+    my_file = open('coffee.json', 'r', encoding='cp1251')
     file_contents = my_file.read()
     coffee_houses = json.loads(file_contents)
     load_dotenv()
     apikey = os.getenv('API_KEY')
-    print('Введите местоположение: ')
     user_coordinates = fetch_coordinates(apikey, input())
     user_coordinates = (user_coordinates[1], user_coordinates[0])
     list_coffee_houses = []
@@ -47,10 +45,10 @@ def main():
         coordinates_coffee = (latitude, longitude)
         distance_coffee = distance.distance(user_coordinates, coordinates_coffee).km
         list_coffee_houses.append({
-        'title': title,
-        'distance': distance_coffee,
-        'latitude': latitude,
-        'longitude': longitude,
+            'title': title,
+            'distance': distance_coffee,
+            'latitude': latitude,
+            'longitude': longitude,
         })
     my_file.close()
     nearest_coffee = sorted(list_coffee_houses, key=get_distance_coffee)[:5]
